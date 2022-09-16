@@ -27,13 +27,15 @@ public class ComputerService {
     }
 
     public GetUpdateComputerDto getComputerById(Long id) {
-        ComputerEntity computerEntity = computerRepository.findById(id).orElseThrow();
+//        ComputerEntity computerEntity = computerRepository.findById(id).orElseThrow();
+        ComputerEntity computerEntity = computerRepository.getById(id);
 
         return modelMapper.map(computerEntity, GetUpdateComputerDto.class);
     }
 
     public List<GetUpdateComputerDto> GetAllComputers() {
-        List<ComputerEntity> computerEntities = (List<ComputerEntity>) computerRepository.findAll();
+//        List<ComputerEntity> computerEntities = (List<ComputerEntity>) computerRepository.findAll();
+        List<ComputerEntity> computerEntities = computerRepository.getAll();
 
         List<GetUpdateComputerDto> getUpdateComputersDto = new ArrayList<>();
 

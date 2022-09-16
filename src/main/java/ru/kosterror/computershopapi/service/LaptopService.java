@@ -27,13 +27,15 @@ public class LaptopService {
     }
 
     public GetUpdateLaptopDto getById(Long id){
-        LaptopEntity laptopEntity = laptopRepository.findById(id).orElseThrow();
+//        LaptopEntity laptopEntity = laptopRepository.findById(id).orElseThrow();
+        LaptopEntity laptopEntity = laptopRepository.getById(id);
 
         return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
     }
 
     public List<GetUpdateLaptopDto> getAll(){
-        List<LaptopEntity> laptopEntities = (List<LaptopEntity>) laptopRepository.findAll();
+//        List<LaptopEntity> laptopEntities = (List<LaptopEntity>) laptopRepository.findAll();
+        List<LaptopEntity> laptopEntities = laptopRepository.getAll();
 
         List<GetUpdateLaptopDto> laptopDtoList = new ArrayList<>();
 

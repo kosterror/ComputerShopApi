@@ -1,8 +1,12 @@
-package ru.kosterror.computershopapi.repository;
+package ru.kosterror.computershopapi.model.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import ru.kosterror.computershopapi.model.entity.LaptopEntity;
 
-public interface LaptopRepository extends CrudRepository<LaptopEntity, Long> {
+import java.util.List;
 
+public interface LaptopRepository extends CrudRepository<LaptopEntity, Long> {
+    LaptopEntity getById(Long id);
+
+    List<LaptopEntity> getAll();
 }
