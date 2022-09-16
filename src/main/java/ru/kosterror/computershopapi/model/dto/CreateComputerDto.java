@@ -1,13 +1,13 @@
 package ru.kosterror.computershopapi.model.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.kosterror.computershopapi.model.enumeration.ComputerType;
 
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
 public class CreateComputerDto {
 
     private String producer;

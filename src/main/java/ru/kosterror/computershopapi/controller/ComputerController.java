@@ -4,28 +4,28 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateComputerDto;
-import ru.kosterror.computershopapi.service.ProductService;
+import ru.kosterror.computershopapi.service.ComputerService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/computer")
 @RequiredArgsConstructor
-public class ProductController {
+public class ComputerController {
 
-    private final ProductService productService;
+    private final ComputerService productService;
 
-    @PostMapping("/create/computer")
+    @PostMapping("/create")
     public GetUpdateComputerDto createComputer(@RequestBody CreateComputerDto createComputerDto){
         return productService.createComputer(createComputerDto);
     }
 
-    @GetMapping("/computer/{id}")
+    @GetMapping("/{id}")
     public GetUpdateComputerDto getComputerById(@PathVariable Long id){
         return productService.getComputerById(id);
     }
 
-    @GetMapping("/computer/")
+    @GetMapping("/")
     public List<GetUpdateComputerDto> getAllComputers(){
         return productService.GetAllComputers();
     }
