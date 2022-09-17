@@ -30,4 +30,14 @@ public class LaptopController {
         return laptopService.getAll();
     }
 
+    @PutMapping("/update")
+    public GetUpdateLaptopDto update(@RequestBody GetUpdateLaptopDto updatedLaptop){
+        return laptopService.update(updatedLaptop);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id){
+        laptopService.deleteById(id);
+    }
+
 }

@@ -3,6 +3,7 @@ package ru.kosterror.computershopapi.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
 import ru.kosterror.computershopapi.model.dto.CreateLaptopDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateLaptopDto;
 import ru.kosterror.computershopapi.model.entity.LaptopEntity;
@@ -26,21 +27,46 @@ public class LaptopService {
         return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
     }
 
-    public GetUpdateLaptopDto getById(Long id){
-        LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
+    public GetUpdateLaptopDto getById(Long id) {
+        try {
+            LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
 
-        return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
+            return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
+        } catch (Exception e) {
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
+
     }
 
-    public List<GetUpdateLaptopDto> getAll(){
+    public List<GetUpdateLaptopDto> getAll() {
         List<LaptopEntity> laptopEntities = (List<LaptopEntity>) laptopRepository.findAll();
 
         List<GetUpdateLaptopDto> laptopDtoList = new ArrayList<>();
 
-        for (LaptopEntity laptopEntity : laptopEntities){
+        for (LaptopEntity laptopEntity : laptopEntities) {
             laptopDtoList.add(modelMapper.map(laptopEntity, GetUpdateLaptopDto.class));
         }
 
         return laptopDtoList;
+    }
+
+    public GetUpdateLaptopDto update(GetUpdateLaptopDto updatedLaptop) {
+        if (laptopRepository.existsById(updatedLaptop.getId())) {
+            LaptopEntity entity = modelMapper.map(updatedLaptop, LaptopEntity.class);
+            entity = laptopRepository.save(entity);
+
+            return modelMapper.map(entity, GetUpdateLaptopDto.class);
+
+        } else {
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
+    }
+
+    public void deleteById(Long id) {
+        try {
+            laptopRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
     }
 }
