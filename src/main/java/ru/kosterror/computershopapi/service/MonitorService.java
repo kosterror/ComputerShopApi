@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
-import ru.kosterror.computershopapi.model.dto.CreateLaptopDto;
-import ru.kosterror.computershopapi.model.dto.GetUpdateLaptopDto;
+import ru.kosterror.computershopapi.model.dto.CreateMonitorDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateMonitorDto;
 import ru.kosterror.computershopapi.model.entity.MonitorEntity;
 import ru.kosterror.computershopapi.model.repository.MonitorRepository;
@@ -20,8 +19,8 @@ public class MonitorService {
     private final MonitorRepository monitorRepository;
     private final ModelMapper modelMapper;
 
-    public GetUpdateMonitorDto create(CreateLaptopDto createLaptopDto) {
-        MonitorEntity monitorEntity = modelMapper.map(createLaptopDto, MonitorEntity.class);
+    public GetUpdateMonitorDto create(CreateMonitorDto createMonitorDto) {
+        MonitorEntity monitorEntity = modelMapper.map(createMonitorDto, MonitorEntity.class);
 
         monitorEntity = monitorRepository.save(monitorEntity);
 
@@ -50,9 +49,9 @@ public class MonitorService {
         return monitorDtoList;
     }
 
-    public GetUpdateMonitorDto update(GetUpdateLaptopDto updateLaptopDto){
-        if (monitorRepository.existsById(updateLaptopDto.getId())){
-            MonitorEntity entity = modelMapper.map(updateLaptopDto, MonitorEntity.class);
+    public GetUpdateMonitorDto update(GetUpdateMonitorDto updatedMonitor){
+        if (monitorRepository.existsById(updatedMonitor.getId())){
+            MonitorEntity entity = modelMapper.map(updatedMonitor, MonitorEntity.class);
             entity = monitorRepository.save(entity);
 
             return modelMapper.map(entity, GetUpdateMonitorDto.class);
