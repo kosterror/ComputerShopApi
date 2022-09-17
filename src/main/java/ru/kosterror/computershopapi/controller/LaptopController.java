@@ -35,4 +35,9 @@ public class LaptopController {
         return laptopService.update(updatedLaptop);
     }
 
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id){
+        laptopService.deleteById(id);
+    }
+
 }

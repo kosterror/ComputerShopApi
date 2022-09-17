@@ -27,32 +27,40 @@ public class LaptopService {
         return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
     }
 
-    public GetUpdateLaptopDto getById(Long id){
+    public GetUpdateLaptopDto getById(Long id) {
         LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
 
         return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
     }
 
-    public List<GetUpdateLaptopDto> getAll(){
+    public List<GetUpdateLaptopDto> getAll() {
         List<LaptopEntity> laptopEntities = (List<LaptopEntity>) laptopRepository.findAll();
 
         List<GetUpdateLaptopDto> laptopDtoList = new ArrayList<>();
 
-        for (LaptopEntity laptopEntity : laptopEntities){
+        for (LaptopEntity laptopEntity : laptopEntities) {
             laptopDtoList.add(modelMapper.map(laptopEntity, GetUpdateLaptopDto.class));
         }
 
         return laptopDtoList;
     }
 
-    public GetUpdateLaptopDto update(GetUpdateLaptopDto updatedLaptop){
-        if (laptopRepository.existsById(updatedLaptop.getId())){
+    public GetUpdateLaptopDto update(GetUpdateLaptopDto updatedLaptop) {
+        if (laptopRepository.existsById(updatedLaptop.getId())) {
             LaptopEntity entity = modelMapper.map(updatedLaptop, LaptopEntity.class);
             entity = laptopRepository.save(entity);
 
             return modelMapper.map(entity, GetUpdateLaptopDto.class);
 
-        } else{
+        } else {
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
+    }
+
+    public void deleteById(Long id) {
+        if (laptopRepository.existsById(id)) {
+            laptopRepository.deleteById(id);
+        } else {
             throw new ProductNotFoundException("The product with this ID was not found");
         }
     }
