@@ -7,4 +7,5 @@ public interface ComputerRepository extends CrudRepository<ComputerEntity, Long>
 
     ComputerEntity getComputerEntityById(Long id);
 
+
 }

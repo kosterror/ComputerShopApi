@@ -13,20 +13,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ComputerController {
 
-    private final ComputerService productService;
+    private final ComputerService computerService;
 
     @PostMapping
     public GetUpdateComputerDto createComputer(@RequestBody CreateComputerDto createComputerDto){
-        return productService.createComputer(createComputerDto);
+        return computerService.createComputer(createComputerDto);
     }
 
     @GetMapping("/{id}")
     public GetUpdateComputerDto getComputerById(@PathVariable Long id){
-        return productService.getComputerById(id);
+        return computerService.getComputerById(id);
     }
 
     @GetMapping
     public List<GetUpdateComputerDto> getAllComputers(){
-        return productService.GetAllComputers();
+        return computerService.GetAllComputers();
+    }
+
+    @PutMapping("/update")
+    public GetUpdateComputerDto update(@RequestBody GetUpdateComputerDto updatedComputer) {
+        return computerService.update(updatedComputer);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        computerService.deleteById(id);
     }
 }
