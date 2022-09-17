@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUpdateMonitor {
+public class GetUpdateMonitorDto {
 
     private Long id;
 
