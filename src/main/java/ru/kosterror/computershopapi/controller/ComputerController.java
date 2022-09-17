@@ -15,7 +15,7 @@ public class ComputerController {
 
     private final ComputerService productService;
 
-    @PostMapping("/create")
+    @PostMapping
     public GetUpdateComputerDto createComputer(@RequestBody CreateComputerDto createComputerDto){
         return productService.createComputer(createComputerDto);
     }
@@ -25,7 +25,7 @@ public class ComputerController {
         return productService.getComputerById(id);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<GetUpdateComputerDto> getAllComputers(){
         return productService.GetAllComputers();
     }

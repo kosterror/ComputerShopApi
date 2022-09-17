@@ -10,6 +10,8 @@ import ru.kosterror.computershopapi.model.enumeration.ComputerType;
 @NoArgsConstructor
 public class CreateComputerDto {
 
+    private Long seriesNumber;
+
     private String producer;
 
     private Long price;

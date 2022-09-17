@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.kosterror.computershopapi.model.dto.CreateLaptopDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateLaptopDto;
 import ru.kosterror.computershopapi.model.entity.LaptopEntity;
-import ru.kosterror.computershopapi.repository.LaptopRepository;
+import ru.kosterror.computershopapi.model.repository.LaptopRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class LaptopService {
     }
 
     public GetUpdateLaptopDto getById(Long id){
-        LaptopEntity laptopEntity = laptopRepository.findById(id).orElseThrow();
+        LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
 
         return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
     }
@@ -43,5 +43,4 @@ public class LaptopService {
 
         return laptopDtoList;
     }
-
 }

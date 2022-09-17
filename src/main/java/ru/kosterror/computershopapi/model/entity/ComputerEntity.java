@@ -12,9 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ComputerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "series_number", nullable = false)
+    private Long seriesNumber;
 
     @Column(name = "producer", nullable = false)
     private String producer;

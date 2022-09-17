@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateComputerDto;
 import ru.kosterror.computershopapi.model.entity.ComputerEntity;
-import ru.kosterror.computershopapi.repository.ComputerRepository;
+import ru.kosterror.computershopapi.model.repository.ComputerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class ComputerService {
     }
 
     public GetUpdateComputerDto getComputerById(Long id) {
-        ComputerEntity computerEntity = computerRepository.findById(id).orElseThrow();
+        ComputerEntity computerEntity = computerRepository.getComputerEntityById(id);
 
         return modelMapper.map(computerEntity, GetUpdateComputerDto.class);
     }

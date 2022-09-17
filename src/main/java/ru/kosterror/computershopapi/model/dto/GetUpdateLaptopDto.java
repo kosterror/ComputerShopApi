@@ -12,6 +12,8 @@ public class GetUpdateLaptopDto {
 
     private Long id;
 
+    private Long seriesNumber;
+
     private String producer;
 
     private Long price;
