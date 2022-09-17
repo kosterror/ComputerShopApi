@@ -10,6 +10,8 @@ import ru.kosterror.computershopapi.model.enumeration.LaptopType;
 @NoArgsConstructor
 public class CreateLaptopDto {
 
+    private Long seriesNumber;
+
     private String producer;
 
     private Long price;
