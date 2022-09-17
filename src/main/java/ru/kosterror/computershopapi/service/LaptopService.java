@@ -28,9 +28,14 @@ public class LaptopService {
     }
 
     public GetUpdateLaptopDto getById(Long id) {
-        LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
+        try {
+            LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
 
-        return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
+            return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
+        } catch (Exception e) {
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
+
     }
 
     public List<GetUpdateLaptopDto> getAll() {
@@ -58,9 +63,9 @@ public class LaptopService {
     }
 
     public void deleteById(Long id) {
-        if (laptopRepository.existsById(id)) {
+        try {
             laptopRepository.deleteById(id);
-        } else {
+        } catch (Exception e) {
             throw new ProductNotFoundException("The product with this ID was not found");
         }
     }
