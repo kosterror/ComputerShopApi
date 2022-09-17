@@ -3,6 +3,7 @@ package ru.kosterror.computershopapi.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
 import ru.kosterror.computershopapi.model.dto.CreateLaptopDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateLaptopDto;
 import ru.kosterror.computershopapi.model.entity.LaptopEntity;
@@ -42,5 +43,17 @@ public class LaptopService {
         }
 
         return laptopDtoList;
+    }
+
+    public GetUpdateLaptopDto update(GetUpdateLaptopDto updatedLaptop){
+        if (laptopRepository.existsById(updatedLaptop.getId())){
+            LaptopEntity entity = modelMapper.map(updatedLaptop, LaptopEntity.class);
+            entity = laptopRepository.save(entity);
+
+            return modelMapper.map(entity, GetUpdateLaptopDto.class);
+
+        } else{
+            throw new ProductNotFoundException("The product with this ID was not found");
+        }
     }
 }
