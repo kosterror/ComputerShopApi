@@ -50,4 +50,15 @@ public class HardDriveService {
         return dtoList;
     }
 
+
+    public GetUpdateHardDriveDto update(GetUpdateHardDriveDto updatedHardDrive){
+        if (hardDriveRepository.existsById(updatedHardDrive.getId())){
+            HardDriveEntity entity = modelMapper.map(updatedHardDrive, HardDriveEntity.class);
+            entity = hardDriveRepository.save(entity);
+
+            return modelMapper.map(entity, GetUpdateHardDriveDto.class);
+        } else{
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
+    }
 }

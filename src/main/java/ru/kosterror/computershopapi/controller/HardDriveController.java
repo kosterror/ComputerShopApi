@@ -30,5 +30,10 @@ public class HardDriveController {
         return hardDriveService.getAll();
     }
 
+    @PutMapping
+    public GetUpdateHardDriveDto update(@RequestBody GetUpdateHardDriveDto updated){
+        return hardDriveService.update(updated);
+    }
+
 
 }
