@@ -9,6 +9,9 @@ import ru.kosterror.computershopapi.model.dto.GetUpdateHardDriveDto;
 import ru.kosterror.computershopapi.model.entity.HardDriveEntity;
 import ru.kosterror.computershopapi.model.repository.HardDriveRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class HardDriveService {
@@ -33,7 +36,18 @@ public class HardDriveService {
         } else {
             throw new ProductNotFoundException("The product with this ID does not exist");
         }
+    }
 
+    public List<GetUpdateHardDriveDto> getAll(){
+        List<HardDriveEntity> entities = (List<HardDriveEntity>) hardDriveRepository.findAll();
+
+        List<GetUpdateHardDriveDto> dtoList = new ArrayList<>();
+
+        for (HardDriveEntity entity : entities){
+            dtoList.add(modelMapper.map(entity, GetUpdateHardDriveDto.class));
+        }
+
+        return dtoList;
     }
 
 }

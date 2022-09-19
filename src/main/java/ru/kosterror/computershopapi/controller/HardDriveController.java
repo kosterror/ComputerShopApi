@@ -6,6 +6,8 @@ import ru.kosterror.computershopapi.model.dto.CreateHardDriveDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateHardDriveDto;
 import ru.kosterror.computershopapi.service.HardDriveService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/hard_drive")
 @RequiredArgsConstructor
@@ -21,6 +23,11 @@ public class HardDriveController {
     @GetMapping("/{id}")
     public GetUpdateHardDriveDto getById(@PathVariable Long id){
         return hardDriveService.getById(id);
+    }
+
+    @GetMapping()
+    public List<GetUpdateHardDriveDto> getAll(){
+        return hardDriveService.getAll();
     }
 
 
