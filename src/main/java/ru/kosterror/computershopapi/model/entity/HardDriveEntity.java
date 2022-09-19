@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "hard_drive")
 @Data
 @NoArgsConstructor
-public class HardDriverEntity {
+public class HardDriveEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
