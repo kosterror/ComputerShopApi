@@ -38,12 +38,12 @@ public class HardDriveService {
         }
     }
 
-    public List<GetUpdateHardDriveDto> getAll(){
+    public List<GetUpdateHardDriveDto> getAll() {
         List<HardDriveEntity> entities = (List<HardDriveEntity>) hardDriveRepository.findAll();
 
         List<GetUpdateHardDriveDto> dtoList = new ArrayList<>();
 
-        for (HardDriveEntity entity : entities){
+        for (HardDriveEntity entity : entities) {
             dtoList.add(modelMapper.map(entity, GetUpdateHardDriveDto.class));
         }
 
@@ -51,14 +51,23 @@ public class HardDriveService {
     }
 
 
-    public GetUpdateHardDriveDto update(GetUpdateHardDriveDto updatedHardDrive){
-        if (hardDriveRepository.existsById(updatedHardDrive.getId())){
+    public GetUpdateHardDriveDto update(GetUpdateHardDriveDto updatedHardDrive) {
+        if (hardDriveRepository.existsById(updatedHardDrive.getId())) {
             HardDriveEntity entity = modelMapper.map(updatedHardDrive, HardDriveEntity.class);
             entity = hardDriveRepository.save(entity);
 
             return modelMapper.map(entity, GetUpdateHardDriveDto.class);
-        } else{
+        } else {
             throw new ProductNotFoundException("The product with this ID does not exist");
         }
+    }
+
+    public void delete(Long id) {
+        if (hardDriveRepository.existsById(id)) {
+            hardDriveRepository.deleteById(id);
+        } else {
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
+
     }
 }

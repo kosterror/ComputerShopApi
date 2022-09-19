@@ -21,19 +21,24 @@ public class HardDriveController {
     }
 
     @GetMapping("/{id}")
-    public GetUpdateHardDriveDto getById(@PathVariable Long id){
+    public GetUpdateHardDriveDto getById(@PathVariable Long id) {
         return hardDriveService.getById(id);
     }
 
     @GetMapping()
-    public List<GetUpdateHardDriveDto> getAll(){
+    public List<GetUpdateHardDriveDto> getAll() {
         return hardDriveService.getAll();
     }
 
     @PutMapping
-    public GetUpdateHardDriveDto update(@RequestBody GetUpdateHardDriveDto updated){
+    public GetUpdateHardDriveDto update(@RequestBody GetUpdateHardDriveDto updated) {
         return hardDriveService.update(updated);
+
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        hardDriveService.delete(id);
+    }
 
 }
