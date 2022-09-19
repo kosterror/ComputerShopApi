@@ -1,10 +1,10 @@
 package ru.kosterror.computershopapi.model.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.kosterror.computershopapi.model.entity.HardDriveEntity;
 
-public interface HardDriveRepository extends JpaRepository<HardDriveEntity, Long> {
+public interface HardDriveRepository extends CrudRepository<HardDriveEntity, Long> {
 
     HardDriveEntity getHardDriveEntityById(Long id);
 
