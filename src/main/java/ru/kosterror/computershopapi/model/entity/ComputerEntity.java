@@ -1,7 +1,8 @@
-package ru.kosterror.computershopapi.model;
+package ru.kosterror.computershopapi.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.kosterror.computershopapi.model.enumeration.ComputerType;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ public class ComputerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int size;
+    private ComputerType type;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_id")

@@ -1,4 +1,4 @@
-package ru.kosterror.computershopapi.model;
+package ru.kosterror.computershopapi.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
