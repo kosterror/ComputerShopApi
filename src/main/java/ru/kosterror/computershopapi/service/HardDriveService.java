@@ -3,6 +3,7 @@ package ru.kosterror.computershopapi.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
 import ru.kosterror.computershopapi.model.dto.CreateHardDriveDto;
 import ru.kosterror.computershopapi.model.dto.GetUpdateHardDriveDto;
 import ru.kosterror.computershopapi.model.entity.HardDriveEntity;
@@ -22,6 +23,16 @@ public class HardDriveService {
         entity = hardDriveRepository.save(entity);
 
         return modelMapper.map(entity, GetUpdateHardDriveDto.class);
+    }
+
+    public GetUpdateHardDriveDto getById(Long id) {
+        if (hardDriveRepository.existsById(id)) {
+            HardDriveEntity entity = hardDriveRepository.getHardDriveEntityById(id);
+
+            return modelMapper.map(entity, GetUpdateHardDriveDto.class);
+        } else {
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
 
     }
 
