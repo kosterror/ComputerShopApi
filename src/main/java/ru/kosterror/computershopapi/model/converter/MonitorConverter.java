@@ -1,12 +1,13 @@
 package ru.kosterror.computershopapi.model.converter;
 
+import ru.kosterror.computershopapi.model.dto.CreateMonitorDto;
 import ru.kosterror.computershopapi.model.dto.MonitorDto;
 import ru.kosterror.computershopapi.model.entity.MonitorEntity;
 import ru.kosterror.computershopapi.model.entity.ProductEntity;
 
 public class MonitorConverter {
 
-    public static MonitorEntity createToEntity(MonitorDto dto) {
+    public static MonitorEntity createToEntity(CreateMonitorDto dto) {
         MonitorEntity entity = new MonitorEntity();
         ProductEntity details = new ProductEntity();
 

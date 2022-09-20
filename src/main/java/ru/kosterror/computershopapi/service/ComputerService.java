@@ -8,7 +8,6 @@ import ru.kosterror.computershopapi.model.dto.ComputerDto;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
 import ru.kosterror.computershopapi.model.entity.ComputerEntity;
 import ru.kosterror.computershopapi.repository.ComputerRepository;
-import ru.kosterror.computershopapi.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ComputerService {
 
-    private final ProductRepository productRepository;
     private final ComputerRepository computerRepository;
 
     public ComputerDto create(CreateComputerDto dto) {
