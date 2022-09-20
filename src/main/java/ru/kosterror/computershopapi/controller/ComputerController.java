@@ -20,7 +20,7 @@ public class ComputerController {
 
 
     @PostMapping()
-    @Operation(description = "Добавление товара категории \"компьютер\" в базу данных")
+    @Operation(summary = "Добавление товара")
     public ComputerDto create(@RequestBody CreateComputerDto computer) {
         return computerService.create(computer);
     }
