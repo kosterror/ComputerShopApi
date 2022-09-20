@@ -1,7 +1,13 @@
 package ru.kosterror.computershopapi.model.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
+@Entity
+@Data
+@NoArgsConstructor
 public class HardDriveEntity {
 
     @Id
