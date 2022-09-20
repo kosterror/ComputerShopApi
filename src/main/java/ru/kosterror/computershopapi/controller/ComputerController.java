@@ -26,25 +26,25 @@ public class ComputerController {
     }
 
     @GetMapping("/{id}")
-    @Operation(description = "Получение товара категории \"компьютер\" по ID")
+    @Operation(summary = "Получение товара")
     public ComputerDto getById(@PathVariable Long id) {
         return computerService.getById(id);
     }
 
     @GetMapping
-    @Operation(description = "Получить все товары категории \"компьютер\"")
+    @Operation(summary = "Получить все товары")
     public List<ComputerDto> getAll() {
         return computerService.getAll();
     }
 
     @PutMapping
-    @Operation(description = "Изменить данные товара категории \"компьютер\"")
+    @Operation(summary = "Изменить данные товара")
     public ComputerDto update(@RequestBody ComputerDto computerDto) {
         return computerService.update(computerDto);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "Удалить товар категории \"компьютер\" по ID")
+    @Operation(summary = "Удалить товар")
     public void delete(@PathVariable Long id) {
         computerService.deleteById(id);
     }
