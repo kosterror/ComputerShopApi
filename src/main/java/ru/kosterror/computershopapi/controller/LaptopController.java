@@ -16,7 +16,7 @@ public class LaptopController {
     private final LaptopService laptopService;
 
 
-    @PostMapping()
+    @PostMapping
     public LaptopDto create(@RequestBody CreateLaptopDto laptop) {
         return laptopService.create(laptop);
     }
