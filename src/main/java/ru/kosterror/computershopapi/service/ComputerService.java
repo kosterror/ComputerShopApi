@@ -2,7 +2,7 @@ package ru.kosterror.computershopapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.kosterror.computershopapi.model.ComputerConverter;
+import ru.kosterror.computershopapi.model.converter.ComputerConverter;
 import ru.kosterror.computershopapi.model.dto.ComputerDto;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
 import ru.kosterror.computershopapi.model.entity.ComputerEntity;
@@ -21,16 +21,16 @@ public class ComputerService {
     private final ComputerRepository computerRepository;
 
     public ComputerDto create(CreateComputerDto dto) {
-        ComputerEntity entity = ComputerConverter.CreateToEntity(dto);
+        ComputerEntity entity = ComputerConverter.createToEntity(dto);
 
         entity = computerRepository.save(entity);
 
-        return ComputerConverter.EntityToDto(entity);
+        return ComputerConverter.entityToDto(entity);
     }
 
     public ComputerDto getById(Long id) {
         ComputerEntity entity = computerRepository.findById(id).orElseThrow();
-        return ComputerConverter.EntityToDto(entity);
+        return ComputerConverter.entityToDto(entity);
     }
 
     public ComputerDto update(ComputerDto dto) {
@@ -47,7 +47,7 @@ public class ComputerService {
 
         entity.setDetails(details);
 
-        return ComputerConverter.EntityToDto(computerRepository.save(entity));
+        return ComputerConverter.entityToDto(computerRepository.save(entity));
     }
 
     public List<ComputerDto> getAll() {
@@ -55,7 +55,7 @@ public class ComputerService {
         List<ComputerDto> dtos = new ArrayList<>();
 
         for (ComputerEntity entity : entities) {
-            dtos.add(ComputerConverter.EntityToDto(entity));
+            dtos.add(ComputerConverter.entityToDto(entity));
         }
 
         return dtos;

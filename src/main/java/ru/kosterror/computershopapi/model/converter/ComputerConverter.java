@@ -1,4 +1,4 @@
-package ru.kosterror.computershopapi.model;
+package ru.kosterror.computershopapi.model.converter;
 
 import ru.kosterror.computershopapi.model.dto.ComputerDto;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
@@ -7,7 +7,7 @@ import ru.kosterror.computershopapi.model.entity.ProductEntity;
 
 public class ComputerConverter {
 
-    public static ComputerEntity CreateToEntity(CreateComputerDto dto) {
+    public static ComputerEntity createToEntity(CreateComputerDto dto) {
         ComputerEntity computerEntity = new ComputerEntity();
         ProductEntity productEntity = new ProductEntity();
 
@@ -22,7 +22,7 @@ public class ComputerConverter {
         return computerEntity;
     }
 
-    public static ComputerDto EntityToDto(ComputerEntity entity) {
+    public static ComputerDto entityToDto(ComputerEntity entity) {
         ComputerDto computerDto = new ComputerDto();
 
         computerDto.setId(entity.getId());
