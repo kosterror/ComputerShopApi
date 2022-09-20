@@ -2,11 +2,11 @@ package ru.kosterror.computershopapi.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.kosterror.computershopapi.exception.ProductNotFoundException;
 import ru.kosterror.computershopapi.model.converter.ComputerConverter;
 import ru.kosterror.computershopapi.model.dto.ComputerDto;
 import ru.kosterror.computershopapi.model.dto.CreateComputerDto;
 import ru.kosterror.computershopapi.model.entity.ComputerEntity;
-import ru.kosterror.computershopapi.model.entity.ProductEntity;
 import ru.kosterror.computershopapi.repository.ComputerRepository;
 import ru.kosterror.computershopapi.repository.ProductRepository;
 
@@ -29,25 +29,22 @@ public class ComputerService {
     }
 
     public ComputerDto getById(Long id) {
-        ComputerEntity entity = computerRepository.findById(id).orElseThrow();
-        return ComputerConverter.entityToDto(entity);
+        if (computerRepository.existsById(id)) {
+            ComputerEntity entity = computerRepository.getComputerEntityById(id);
+            return ComputerConverter.entityToDto(entity);
+        }
+
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
     public ComputerDto update(ComputerDto dto) {
-        ComputerEntity entity = computerRepository.findById(dto.getId()).orElseThrow();
+        if (computerRepository.existsById(dto.getId())) {
+            ComputerEntity entity = ComputerConverter.updateEntity(dto);
 
-        entity.setType(dto.getType());
+            return ComputerConverter.entityToDto(computerRepository.save(entity));
+        }
 
-        ProductEntity details = entity.getDetails();
-
-        details.setSerialNumber(dto.getSerialNumber());
-        details.setProducer(dto.getProducer());
-        details.setCost(dto.getCost());
-        details.setCountInStock(dto.getCountInStock());
-
-        entity.setDetails(details);
-
-        return ComputerConverter.entityToDto(computerRepository.save(entity));
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
     public List<ComputerDto> getAll() {
@@ -61,7 +58,11 @@ public class ComputerService {
         return dtos;
     }
 
-    public void deleteById(Long id){
-        computerRepository.deleteById(id);
+    public void deleteById(Long id) {
+        if (computerRepository.existsById(id)) {
+            computerRepository.deleteById(id);
+        } else {
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
     }
 }

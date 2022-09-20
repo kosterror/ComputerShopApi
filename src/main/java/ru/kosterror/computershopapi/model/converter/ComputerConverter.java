@@ -34,4 +34,21 @@ public class ComputerConverter {
 
         return computerDto;
     }
+
+    public static ComputerEntity updateEntity(ComputerDto dto){
+        ProductEntity details = new ProductEntity();
+
+        details.setSerialNumber(dto.getSerialNumber());
+        details.setProducer(dto.getProducer());
+        details.setCost(dto.getCost());
+        details.setCountInStock(dto.getCountInStock());
+
+        ComputerEntity entity = new ComputerEntity();
+
+        entity.setId(dto.getId());
+        entity.setType(dto.getType());
+        entity.setDetails(details);
+
+        return entity;
+    }
 }

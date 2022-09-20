@@ -61,8 +61,10 @@ public class LaptopService {
         if (laptopRepository.existsById(id)){
             laptopRepository.deleteById(id);
         }
+        else{
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
 
-        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
 }
