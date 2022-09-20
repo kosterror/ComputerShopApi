@@ -3,7 +3,6 @@ package ru.kosterror.computershopapi.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.kosterror.computershopapi.model.enumeration.LaptopType;
 
 @Data
 @AllArgsConstructor
@@ -11,7 +10,7 @@ import ru.kosterror.computershopapi.model.enumeration.LaptopType;
 public class MonitorDto {
 
     private Long id;
-    private LaptopType type;
+    private int size;
     private String serialNumber;
     private String producer;
     private int cost;
