@@ -10,14 +10,10 @@ import ru.kosterror.computershopapi.model.enumeration.LaptopType;
 @NoArgsConstructor
 public class CreateLaptopDto {
 
-    private Long seriesNumber;
-
+    private LaptopType type;
+    private String serialNumber;
     private String producer;
-
-    private Long price;
-
-    private Long countInStock;
-
-    private LaptopType laptopType;
+    private int cost;
+    private int countInStock;
 
 }

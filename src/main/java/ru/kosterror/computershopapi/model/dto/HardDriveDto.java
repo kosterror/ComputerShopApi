@@ -7,18 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUpdateMonitorDto {
+public class HardDriveDto {
 
     private Long id;
-
-    private Long seriesNumber;
-
+    private int size;
+    private String serialNumber;
     private String producer;
-
-    private Long price;
-
-    private Long countInStock;
-
-    private Long diagonal;
+    private int cost;
+    private int countInStock;
 
 }

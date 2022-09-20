@@ -1,13 +1,13 @@
 package ru.kosterror.computershopapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
+import ru.kosterror.computershopapi.exception.ProductNotFoundException;
+import ru.kosterror.computershopapi.model.converter.MonitorConverter;
 import ru.kosterror.computershopapi.model.dto.CreateMonitorDto;
-import ru.kosterror.computershopapi.model.dto.GetUpdateMonitorDto;
+import ru.kosterror.computershopapi.model.dto.MonitorDto;
 import ru.kosterror.computershopapi.model.entity.MonitorEntity;
-import ru.kosterror.computershopapi.model.repository.MonitorRepository;
+import ru.kosterror.computershopapi.repository.MonitorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,59 +17,51 @@ import java.util.List;
 public class MonitorService {
 
     private final MonitorRepository monitorRepository;
-    private final ModelMapper modelMapper;
 
-    public GetUpdateMonitorDto create(CreateMonitorDto createMonitorDto) {
-        MonitorEntity monitorEntity = modelMapper.map(createMonitorDto, MonitorEntity.class);
+    public MonitorDto create(CreateMonitorDto dto) {
+        MonitorEntity entity = MonitorConverter.createToEntity(dto);
 
-        monitorEntity = monitorRepository.save(monitorEntity);
+        entity = monitorRepository.save(entity);
 
-        return modelMapper.map(monitorEntity, GetUpdateMonitorDto.class);
+        return MonitorConverter.entityToDto(entity);
     }
 
-    public GetUpdateMonitorDto getById(Long id) {
-        try {
-            MonitorEntity monitorEntity = monitorRepository.getMonitorEntityById(id);
+    public MonitorDto getById(Long id) {
+        if (monitorRepository.existsById(id)) {
+            MonitorEntity entity = monitorRepository.getMonitorEntityById(id);
 
-            return modelMapper.map(monitorEntity, GetUpdateMonitorDto.class);
-        } catch (Exception e) {
-            throw new ProductNotFoundException("The product with this ID was not found");
-        }
-    }
-
-    public List<GetUpdateMonitorDto> getAll(){
-        List<MonitorEntity> monitorEntities = monitorRepository.findAll();
-
-        List<GetUpdateMonitorDto> monitorDtoList = new ArrayList<>();
-
-        for (MonitorEntity monitorEntity : monitorEntities){
-            monitorDtoList.add(modelMapper.map(monitorEntity, GetUpdateMonitorDto.class));
+            return MonitorConverter.entityToDto(entity);
         }
 
-        return monitorDtoList;
+        throw new ProductNotFoundException("The product with this ID does not exist ");
     }
 
-    public GetUpdateMonitorDto update(GetUpdateMonitorDto updatedMonitor){
-        if (monitorRepository.existsById(updatedMonitor.getId())){
-            MonitorEntity entity = modelMapper.map(updatedMonitor, MonitorEntity.class);
-            entity = monitorRepository.save(entity);
+    public MonitorDto update(MonitorDto dto) {
+        if (monitorRepository.existsById(dto.getId())) {
+            MonitorEntity entity = MonitorConverter.updateEntity(dto);
 
-            return modelMapper.map(entity, GetUpdateMonitorDto.class);
-
-
-        } else{
-            throw new ProductNotFoundException("The product with this ID was not found");
+            return MonitorConverter.entityToDto(monitorRepository.save(entity));
         }
+
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
-    public void deleteById(Long id){
-        try{
+    public List<MonitorDto> getAll() {
+        List<MonitorEntity> entities = (List<MonitorEntity>) monitorRepository.findAll();
+        List<MonitorDto> dtos = new ArrayList<>();
+
+        for (MonitorEntity entity : entities) {
+            dtos.add(MonitorConverter.entityToDto(entity));
+        }
+
+        return dtos;
+    }
+
+    public void deleteById(Long id) {
+        if (monitorRepository.existsById(id)) {
             monitorRepository.deleteById(id);
-        } catch (Exception e){
-            throw new ProductNotFoundException("The product with this ID was not found");
+        } else{
+            throw new ProductNotFoundException("The product with this ID does not exist");
         }
     }
-
-
-
 }

@@ -3,22 +3,18 @@ package ru.kosterror.computershopapi.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.kosterror.computershopapi.model.enumeration.ComputerType;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUpdateHardDriveDto {
+public class ComputerDto {
 
     private Long id;
-
-    private Long seriesNumber;
-
+    private ComputerType type;
+    private String serialNumber;
     private String producer;
-
-    private Long price;
-
-    private Long countInStock;
-
-    private Long size;
+    private int cost;
+    private int countInStock;
 
 }

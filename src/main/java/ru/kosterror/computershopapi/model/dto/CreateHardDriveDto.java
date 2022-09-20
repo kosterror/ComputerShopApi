@@ -1,6 +1,5 @@
 package ru.kosterror.computershopapi.model.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,15 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateHardDriveDto {
 
-    private Long seriesNumber;
-
+    private int size;
+    private String serialNumber;
     private String producer;
-
-    private Long price;
-
-    private Long countInStock;
-
-    private Long size;
-
+    private int cost;
+    private int countInStock;
 
 }

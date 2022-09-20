@@ -1,13 +1,13 @@
 package ru.kosterror.computershopapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
+import ru.kosterror.computershopapi.exception.ProductNotFoundException;
+import ru.kosterror.computershopapi.model.converter.HardDriveConverter;
 import ru.kosterror.computershopapi.model.dto.CreateHardDriveDto;
-import ru.kosterror.computershopapi.model.dto.GetUpdateHardDriveDto;
+import ru.kosterror.computershopapi.model.dto.HardDriveDto;
 import ru.kosterror.computershopapi.model.entity.HardDriveEntity;
-import ru.kosterror.computershopapi.model.repository.HardDriveRepository;
+import ru.kosterror.computershopapi.repository.HardDriveRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,48 +18,39 @@ public class HardDriveService {
 
     private final HardDriveRepository hardDriveRepository;
 
-    private final ModelMapper modelMapper;
+    public HardDriveDto create(CreateHardDriveDto dto) {
+        HardDriveEntity entity = HardDriveConverter.createToEntity(dto);
 
-    public GetUpdateHardDriveDto create(CreateHardDriveDto createHardDriveDto) {
-
-        HardDriveEntity entity = modelMapper.map(createHardDriveDto, HardDriveEntity.class);
-        entity = hardDriveRepository.save(entity);
-
-        return modelMapper.map(entity, GetUpdateHardDriveDto.class);
+        return HardDriveConverter.entityToDto(hardDriveRepository.save(entity));
     }
 
-    public GetUpdateHardDriveDto getById(Long id) {
+    public HardDriveDto getById(Long id) {
         if (hardDriveRepository.existsById(id)) {
-            HardDriveEntity entity = hardDriveRepository.getHardDriveEntityById(id);
-
-            return modelMapper.map(entity, GetUpdateHardDriveDto.class);
-        } else {
-            throw new ProductNotFoundException("The product with this ID does not exist");
+            return HardDriveConverter.entityToDto(hardDriveRepository.getHardDriveEntityById(id));
         }
+
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
-    public List<GetUpdateHardDriveDto> getAll() {
-        List<HardDriveEntity> entities = (List<HardDriveEntity>) hardDriveRepository.findAll();
+    public HardDriveDto update(HardDriveDto dto) {
+        if (hardDriveRepository.existsById(dto.getId())) {
+            HardDriveEntity entity = HardDriveConverter.updateEntity(dto);
 
-        List<GetUpdateHardDriveDto> dtoList = new ArrayList<>();
+            return HardDriveConverter.entityToDto(hardDriveRepository.save(entity));
+        }
+
+        throw new ProductNotFoundException("The product with this ID does not exist");
+    }
+
+    public List<HardDriveDto> getAll() {
+        List<HardDriveEntity> entities = (List<HardDriveEntity>) hardDriveRepository.findAll();
+        List<HardDriveDto> dtos = new ArrayList<>();
 
         for (HardDriveEntity entity : entities) {
-            dtoList.add(modelMapper.map(entity, GetUpdateHardDriveDto.class));
+            dtos.add(HardDriveConverter.entityToDto(entity));
         }
 
-        return dtoList;
-    }
-
-
-    public GetUpdateHardDriveDto update(GetUpdateHardDriveDto updatedHardDrive) {
-        if (hardDriveRepository.existsById(updatedHardDrive.getId())) {
-            HardDriveEntity entity = modelMapper.map(updatedHardDrive, HardDriveEntity.class);
-            entity = hardDriveRepository.save(entity);
-
-            return modelMapper.map(entity, GetUpdateHardDriveDto.class);
-        } else {
-            throw new ProductNotFoundException("The product with this ID does not exist");
-        }
+        return dtos;
     }
 
     public void delete(Long id) {
@@ -68,6 +59,5 @@ public class HardDriveService {
         } else {
             throw new ProductNotFoundException("The product with this ID does not exist");
         }
-
     }
 }

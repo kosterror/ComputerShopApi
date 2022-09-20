@@ -1,13 +1,13 @@
 package ru.kosterror.computershopapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import ru.kosterror.computershopapi.exceptions.ProductNotFoundException;
+import ru.kosterror.computershopapi.exception.ProductNotFoundException;
+import ru.kosterror.computershopapi.model.converter.LaptopConverter;
 import ru.kosterror.computershopapi.model.dto.CreateLaptopDto;
-import ru.kosterror.computershopapi.model.dto.GetUpdateLaptopDto;
+import ru.kosterror.computershopapi.model.dto.LaptopDto;
 import ru.kosterror.computershopapi.model.entity.LaptopEntity;
-import ru.kosterror.computershopapi.model.repository.LaptopRepository;
+import ru.kosterror.computershopapi.repository.LaptopRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,56 +17,54 @@ import java.util.List;
 public class LaptopService {
 
     private final LaptopRepository laptopRepository;
-    private final ModelMapper modelMapper;
 
-    public GetUpdateLaptopDto create(CreateLaptopDto createLaptopDto) {
-        LaptopEntity laptopEntity = modelMapper.map(createLaptopDto, LaptopEntity.class);
+    public LaptopDto create(CreateLaptopDto dto){
+        LaptopEntity entity = LaptopConverter.createToEntity(dto);
 
-        laptopEntity = laptopRepository.save(laptopEntity);
+        entity = laptopRepository.save(entity);
 
-        return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
+        return LaptopConverter.entityToDto(entity);
     }
 
-    public GetUpdateLaptopDto getById(Long id) {
-        try {
-            LaptopEntity laptopEntity = laptopRepository.getLaptopEntityById(id);
+    public LaptopDto getById(Long id){
+        if (laptopRepository.existsById(id)){
+            LaptopEntity entity = laptopRepository.getLaptopEntityById(id);
 
-            return modelMapper.map(laptopEntity, GetUpdateLaptopDto.class);
-        } catch (Exception e) {
-            throw new ProductNotFoundException("The product with this ID was not found");
+            return LaptopConverter.entityToDto(entity);
         }
 
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
-    public List<GetUpdateLaptopDto> getAll() {
-        List<LaptopEntity> laptopEntities = (List<LaptopEntity>) laptopRepository.findAll();
+    public LaptopDto update(LaptopDto dto){
+        if (laptopRepository.existsById(dto.getId())){
+            LaptopEntity entity = LaptopConverter.updateEntity(dto);
 
-        List<GetUpdateLaptopDto> laptopDtoList = new ArrayList<>();
-
-        for (LaptopEntity laptopEntity : laptopEntities) {
-            laptopDtoList.add(modelMapper.map(laptopEntity, GetUpdateLaptopDto.class));
+            return LaptopConverter.entityToDto(laptopRepository.save(entity));
         }
 
-        return laptopDtoList;
+        throw new ProductNotFoundException("The product with this ID does not exist");
     }
 
-    public GetUpdateLaptopDto update(GetUpdateLaptopDto updatedLaptop) {
-        if (laptopRepository.existsById(updatedLaptop.getId())) {
-            LaptopEntity entity = modelMapper.map(updatedLaptop, LaptopEntity.class);
-            entity = laptopRepository.save(entity);
+    public List<LaptopDto> getAll(){
+        List<LaptopEntity> entities = (List<LaptopEntity>) laptopRepository.findAll();
+        List<LaptopDto> dtos = new ArrayList<>();
 
-            return modelMapper.map(entity, GetUpdateLaptopDto.class);
-
-        } else {
-            throw new ProductNotFoundException("The product with this ID was not found");
+        for (LaptopEntity entity : entities){
+            dtos.add(LaptopConverter.entityToDto(entity));
         }
+
+        return dtos;
     }
 
-    public void deleteById(Long id) {
-        try {
+    public void deleteById(Long id){
+        if (laptopRepository.existsById(id)){
             laptopRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new ProductNotFoundException("The product with this ID was not found");
         }
+        else{
+            throw new ProductNotFoundException("The product with this ID does not exist");
+        }
+
     }
+
 }
